@@ -6,6 +6,12 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        return view('welcome_message');
+      $absensi = $this->AbsensiModel->getAllAbsensi();
+      $data = [
+        "title" => "Home",
+        "absensi" => $absensi
+
+      ];
+      return view('index', $data);
     }
 }
