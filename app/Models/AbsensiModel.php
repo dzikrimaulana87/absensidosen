@@ -4,6 +4,7 @@ use CodeIgniter\Model;
 
 
 class AbsensiModel extends Model{
+    protected $allowedFields = ['nama', 'nik'];
     protected $table = 'absensi';
     protected $primaryKey = 'id';
 

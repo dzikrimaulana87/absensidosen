@@ -56,5 +56,6 @@ abstract class BaseController extends Controller
         // E.g.: $this->session = \Config\Services::session();
 
         $this -> AbsensiModel = new \App\Models\AbsensiModel();
+        $this -> Validator = new \App\Models\Validator();
     }
 }
