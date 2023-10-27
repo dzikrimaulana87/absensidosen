@@ -13,6 +13,7 @@
         <div class="col-md-6 offset-md-3">
             <h1>Form Absensi</h1>
             <form method="post" action="/save">
+                <?= csrf_field(); ?>
                 <div class="form-group">
                     <label for="nik">Masukkan NIK</label>
                     <input type="number" class="form-control" id="nik" placeholder="15 digit NIK" name="nik">

@@ -21,25 +21,38 @@ class Home extends BaseController
     return view('absensi');
   }
 
+  public function today($nik)
+  {
+    $valid = $this->AbsensiModel->isAlreadyToday($nik);
+    return $valid;
+  }
+
   public function save()
   {
-      $name = $this->Validator->validator($this->request->getVar('nik'));
-  
-      if ($name === null) {
-          $error = 'Data tidak dapat ditemukan di data dosen';
-          echo json_encode(['error' => $error]);
+    $nik = $this->request->getVar('nik');
+    $name = $this->Validator->validator($nik);
+
+    if ($name === null) {
+      $error = 'Data tidak dapat ditemukan di data dosen';
+      echo json_encode(['error' => $error]);
+    } else {
+
+      $valid = $this->today($nik);
+
+      if ($valid) {
+        $error = "Data sudah ada untuk NIK " . $nik . " hari ini";
+        echo json_encode(['error' => $error]);
       } else {
-          $nik = $this->request->getVar('nik');
-  
-          $this->AbsensiModel->save([
-              'nik' => $nik,
-              'nama' => $name
-          ]);
-  
-          echo json_encode(['success' => true]);
+        $this->AbsensiModel->save([
+          'nik' => $nik,
+          'nama' => $name
+        ]);
+
+        echo json_encode(['success' => true]);
       }
+    }
   }
-  
+
 
 
 }
