@@ -11,6 +11,11 @@ class AbsensiModel extends Model
     protected $primaryKey = 'id';
 
     protected $useTimestamp = true;
+    public function __construct()
+    {
+        parent::__construct();
+        date_default_timezone_set('Asia/Jakarta');
+    }
 
     public function getAllAbsensi()
     {

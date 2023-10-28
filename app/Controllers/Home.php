@@ -30,7 +30,7 @@ class Home extends BaseController
   public function save()
   {
     $nik = $this->request->getVar('nik');
-    $name = $this->Validator->validator($nik);
+    $name = $this->Validator->isValid($nik);
 
     if ($name === null) {
       $error = 'Data tidak dapat ditemukan di data dosen';

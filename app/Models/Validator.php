@@ -10,7 +10,7 @@ class Validator extends Model
     protected $primaryKey = 'id';
     protected $useTimestamp = true;
 
-    public function validator($nik)
+    public function isValid($nik)
     {
         $result = $this->where('nik', $nik)->first();
 
