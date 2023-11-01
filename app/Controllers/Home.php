@@ -29,29 +29,31 @@ class Home extends BaseController
 
   public function save()
   {
-    $nik = $this->request->getVar('nik');
-    $name = $this->Validator->isValid($nik);
-
-    if ($name === null) {
-      $error = 'Data tidak dapat ditemukan di data dosen';
-      echo json_encode(['error' => $error]);
-    } else {
-
-      $valid = $this->today($nik);
-
-      if ($valid) {
-        $error = "Data sudah ada untuk NIK " . $nik . " hari ini";
-        echo json_encode(['error' => $error]);
+      $nik = $this->request->getVar('nik');
+      $name = $this->Validator->isValid($nik);
+  
+      if ($name === null) {
+          $error = 'Data tidak dapat ditemukan di data dosen';
+          echo '<div class="alert alert-danger" role="alert">' . $error . '</div>';
       } else {
-        $this->AbsensiModel->save([
-          'nik' => $nik,
-          'nama' => $name
-        ]);
-
-        echo json_encode(['success' => true]);
+  
+          $valid = $this->today($nik);
+  
+          if ($valid) {
+              $error = "Data sudah ada untuk NIK " . $nik . " hari ini";
+              echo '<div class="alert alert-warning" role="alert">' . $error . '</div>';
+          } else {
+              $this->AbsensiModel->save([
+                  'nik' => $nik,
+                  'nama' => $name
+              ]);
+  
+              $successMessage = 'Data berhasil disimpan';
+              echo '<div class="alert alert-success" role="alert">' . $successMessage . '</div>';
+          }
       }
-    }
   }
+  
 
 
 
