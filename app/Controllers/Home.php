@@ -27,34 +27,29 @@ class Home extends BaseController
     return $valid;
   }
 
+  public function __construct()
+  {
+    $this->session = \Config\Services::session(); // Load the session library
+  }
   public function save()
   {
-      $nik = $this->request->getVar('nik');
-      $name = $this->Validator->isValid($nik);
-  
-      if ($name === null) {
-          $error = 'Data tidak dapat ditemukan di data dosen';
-          echo '<div class="alert alert-danger" role="alert">' . $error . '</div>';
+    $nik = $this->request->getVar('nik');
+    $name = $this->Validator->isValid($nik);
+
+    if ($name === null) {
+      $this->session->setFlashData("error", "Data tidak dapat ditemukan di data dosen");
+    } else {
+      $valid = $this->today($nik);
+      if ($valid) {
+        $this->session->setFlashData("error", "Data sudah ada untuk NIK " . $nik . " hari ini");
       } else {
-  
-          $valid = $this->today($nik);
-  
-          if ($valid) {
-              $error = "Data sudah ada untuk NIK " . $nik . " hari ini";
-              echo '<div class="alert alert-warning" role="alert">' . $error . '</div>';
-          } else {
-              $this->AbsensiModel->save([
-                  'nik' => $nik,
-                  'nama' => $name
-              ]);
-  
-              $successMessage = 'Data berhasil disimpan';
-              echo '<div class="alert alert-success" role="alert">' . $successMessage . '</div>';
-          }
+        $this->AbsensiModel->save([
+          'nik' => $nik,
+          'nama' => $name
+        ]);
+        $this->session->setFlashData("success", "Data berhasil disimpan");
       }
+    }
+    return redirect()->to(base_url("/absen"));
   }
-  
-
-
-
 }
