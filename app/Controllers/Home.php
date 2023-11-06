@@ -27,32 +27,29 @@ class Home extends BaseController
     return $valid;
   }
 
+  public function __construct()
+  {
+    $this->session = \Config\Services::session(); // Load the session library
+  }
   public function save()
   {
     $nik = $this->request->getVar('nik');
     $name = $this->Validator->isValid($nik);
 
     if ($name === null) {
-      $error = 'Data tidak dapat ditemukan di data dosen';
-      echo json_encode(['error' => $error]);
+      $this->session->setFlashData("error", "Data tidak dapat ditemukan di data dosen");
     } else {
-
       $valid = $this->today($nik);
-
       if ($valid) {
-        $error = "Data sudah ada untuk NIK " . $nik . " hari ini";
-        echo json_encode(['error' => $error]);
+        $this->session->setFlashData("error", "Data sudah ada untuk NIK " . $nik . " hari ini");
       } else {
         $this->AbsensiModel->save([
           'nik' => $nik,
           'nama' => $name
         ]);
-
-        echo json_encode(['success' => true]);
+        $this->session->setFlashData("success", "Data berhasil disimpan");
       }
     }
+    return redirect()->to(base_url("/absen"));
   }
-
-
-
 }
