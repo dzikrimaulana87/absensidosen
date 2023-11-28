@@ -37,17 +37,17 @@ class Home extends BaseController
     $name = $this->Validator->isValid($nik);
 
     if ($name === null) {
-      $this->session->setFlashData("error", "Data tidak dapat ditemukan di data dosen");
+      session()->setFlashdata('failed', true);
     } else {
       $valid = $this->today($nik);
       if ($valid) {
-        $this->session->setFlashData("error", "Data sudah ada untuk NIK " . $nik . " hari ini");
+        session()->setFlashdata('already', true);
       } else {
         $this->AbsensiModel->save([
           'nik' => $nik,
           'nama' => $name
         ]);
-        $this->session->setFlashData("success", "Data berhasil disimpan");
+        session()->setFlashdata('success', true);
       }
     }
     return redirect()->to(base_url("/absen"));
