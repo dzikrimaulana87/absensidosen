@@ -44,7 +44,7 @@ foreach ($alertTypes as $type => $alert) {
     <form method="post" action="/save">
         <?= csrf_field(); ?>
         <div class="form-group">
-            <input type="number" class="form-control" id="nik" placeholder="15 digit NIK" name="nik">
+            <input type="number" class="form-control" id="nik" placeholder="15 digit NIK" name="nik" min="0">
         </div>
         <button type="submit" class="btn" style="background-color: #0804c4;
         border-color: #0804c4; color: #fff;">Absen</button>

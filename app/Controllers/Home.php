@@ -33,7 +33,8 @@ class Home extends BaseController
   }
   public function save()
   {
-    $nik = $this->request->getVar('nik');
+
+    $nik = preg_replace('/[^0-9]/','',$this->request->getVar('nik'));
     $name = $this->Validator->isValid($nik);
 
     if ($name === null) {
