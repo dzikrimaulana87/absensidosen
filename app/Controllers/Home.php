@@ -25,7 +25,7 @@ class Home extends BaseController
 
   public function absensinya()
   {
-      return $this->response->setJSON($this->AbsensiModel->PresenceByDate());
+    return $this->response->setJSON($this->AbsensiModel->PresenceByDate());
   }
 
   public function today($nik)
@@ -40,24 +40,39 @@ class Home extends BaseController
   }
   public function save()
   {
-
-    $nik = preg_replace('/[^0-9]/','',$this->request->getVar('nik'));
+    $nik = preg_replace('/[^0-9]/', '', $this->request->getVar('nik'));
     $name = $this->Validator->isValid($nik);
 
     if ($name === null) {
-      session()->setFlashdata('failed', true);
+      $response = [
+        'status' => 'failed',
+        'boldMessage' => 'Data tidak tersedia',
+        'message' => 'hubungi operator jika Anda rasa ini adalah kesalahan',
+      ];
     } else {
       $valid = $this->today($nik);
       if ($valid) {
-        session()->setFlashdata('already', true);
+        $response = [
+          'status' => 'already',
+          'boldMessage' => 'Dosen sudah absen hari ini',
+          'message' => 'hubungi operator jika Anda rasa ini adalah kesalahan'
+        ];
       } else {
         $this->AbsensiModel->save([
           'nik' => $nik,
           'nama' => $name
         ]);
-        session()->setFlashdata('success', true);
+        $response = [
+          'status' => 'success',
+          'boldMessage' => 'Absensi berhasil',
+          'message' => 'selamat bekerja!'
+
+        ];
       }
     }
-    return redirect()->to(base_url("/absen"));
+
+    // Return the response as JSON
+    return $this->response->setJSON($response);
   }
+
 }

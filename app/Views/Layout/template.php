@@ -8,7 +8,7 @@
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Site Metas -->
-    <link rel="icon" href="<?= base_url("assets/images/logo_unsika.png") ?>" type="image/gif">
+    <link rel="icon" href="<?= base_url("assets/img/logo_unsika.png") ?>" type="image/gif">
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -21,6 +21,8 @@
 
     <!-- Custom css -->
     <link href="<?= base_url("assets/css/style.css") ?>" rel="stylesheet">
+    <link href="<?= base_url("assets/css/card.css") ?>" rel="stylesheet">
+
     <!-- Fonts style -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
 
