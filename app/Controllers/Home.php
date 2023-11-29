@@ -7,18 +7,25 @@ class Home extends BaseController
   public function index(): string
   {
     $absensi = $this->AbsensiModel->getAllAbsensi();
+    $idabsenDESC = $this->AbsensiModel->PresenceByDate();
+
     $data = [
       "title" => "Home",
-      "absensi" => $absensi
-
+      "absensi" => $absensi,
+      "idabsenDESC" => $idabsenDESC
     ];
+
     return view('index', $data);
   }
 
   public function absen(): string
   {
-
     return view('absensi');
+  }
+
+  public function absensinya()
+  {
+      return $this->response->setJSON($this->AbsensiModel->PresenceByDate());
   }
 
   public function today($nik)

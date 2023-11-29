@@ -23,6 +23,17 @@ class AbsensiModel extends Model
         return $this->where('DATE(timestamp)', $today)->findAll();
     }
 
+    public function PresenceByDate()
+    {
+        $today = date('Y-m-d');
+        $result = $this->where('DATE(timestamp)', $today)->orderBy('timestamp', 'DESC')->findAll();
+        if (!$result) {
+            return 0;
+        }
+
+        return $result;
+    }
+
     public function isAlreadyToday($nik)
     {
         $today = date('Y-m-d');

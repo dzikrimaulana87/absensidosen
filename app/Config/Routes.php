@@ -10,3 +10,5 @@ $routes->get('/', 'Home::index');
 $routes->post('save', 'Home::save');
 
 $routes->get('absen','Home::absen');
+
+$routes->get('data_absen', 'Home::absensinya');
